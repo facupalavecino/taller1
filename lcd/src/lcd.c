@@ -56,14 +56,20 @@ void LCD_send_nibble(char data)
 	union ubyte my_union;
 	my_union._byte = data;
 	// Output the four data bits
-	LCD_D4 = my_union.bit.b0;
-	LCD_D5 = my_union.bit.b1;
-	LCD_D6 = my_union.bit.b2;
-	LCD_D7 = my_union.bit.b3;
+	gpioWrite(LCD1,my_union.bit.b0);
+	gpioWrite(LCD2,my_union.bit.b1);
+	gpioWrite(LCD3,my_union.bit.b2);
+	gpioWrite(LCD4,my_union.bit.b3);
+	/*LCD1 = my_union.bit.b0;
+	LCD2 = my_union.bit.b1;
+	LCD3 = my_union.bit.b2;
+	LCD4 = my_union.bit.b3;*/
 	// pulse the LCD enable line
-	LCD_ENABLE = 1;
+	gpioWrite(LCDEN,1);
+	//LCDEN = 1;
 	for (data=20; data; data--);
-	LCD_ENABLE = 0;
+	gpioWrite(LCDEN,0);
+	//LCDEN = 0;
 }
 
 //**************************************************************************
@@ -77,10 +83,13 @@ void LCD_send_byte(char address, char data)
 {
   unsigned int temp;
 	if(address==0)
-		LCD_RS = 0;               // config the R/S line
+		gpioWrite(LCDRS,0);
+		//LCDRS = 0;               // config the R/S line
 	else
-		LCD_RS = 1;
-	LCD_ENABLE = 0;                 // set LCD enable line to 0
+		gpioWrite(LCDRS,1);
+		//LCDRS = 1;
+	gpioWrite(LCDEN,0);
+	//LCDEN = 0;                 // set LCD enable line to 0
 	LCD_send_nibble(data >> 4);     // send the higher nibble
 	LCD_send_nibble(data & 0x0f);   // send the lower nibble
 	for (temp=1000; temp; temp--);
@@ -97,19 +106,31 @@ void LCD_init(char mode1, char mode2)
 {
 	char aux;
 	// Configure the pins as outputs
-	LCD_ENABLE_DIR = 1;
-	LCD_RS_DIR = 1;
-	LCD_D4_DIR = 1;
-	LCD_D5_DIR = 1;
-	LCD_D6_DIR = 1;
-	LCD_D7_DIR = 1;
+	gpioConfig(LCDRS,GPIO_OUTPUT);
+	gpioConfig(LCDEN,GPIO_OUTPUT);
+	gpioConfig(LCD1,GPIO_OUTPUT);
+	gpioConfig(LCD2,GPIO_OUTPUT);
+	gpioConfig(LCD3,GPIO_OUTPUT);
+	gpioConfig(LCD4,GPIO_OUTPUT);
+	//LCD_EN_DIR = 1;
+	//LCD_RS_DIR = 1;
+	//LCD_D4_DIR = 1;
+	//LCD_D5_DIR = 1;
+	//LCD_D6_DIR = 1;
+	//LCD_D7_DIR = 1;
 	// Set the LCD data pins to zero
-	LCD_D4 = 0;
-	LCD_D5 = 0;
-	LCD_D6 = 0;
-	LCD_D7 = 0;
-	LCD_RS = 0;
-	LCD_ENABLE = 0;       // LCD enable = 0
+	gpioWrite(LCD1,0);
+	gpioWrite(LCD2,0);
+	gpioWrite(LCD3,0);
+	gpioWrite(LCD4,0);
+	gpioWrite(LCDRS,0);
+	gpioWrite(LCDEN,0);
+	//LCD1 = 0;
+	//LCD2 = 0;
+	//LCD3 = 0;
+	//LCD4 = 0;
+	//LCDRS = 0;
+	//LCDEN = 0;       LCD enable = 0
 
 	LCD_delay_ms(15);
 	// LCD 4-bit mode initialization sequence

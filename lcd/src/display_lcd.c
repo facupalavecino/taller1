@@ -37,7 +37,7 @@
 
 /*==================[inclusions]=============================================*/
 
-#include "switches_leds.h"   /* <= own header */
+#include "lcd.h"   /* <= own header */
 
 #include "sapi.h"            /* <= sAPI header */
 
@@ -64,7 +64,7 @@ int main(void){
    boardConfig();
 
    LCD_init (_2_LINES | DISPLAY_8X5, CURSOR_OFF | DISPLAY_ON);
-   LCD_write_string("Hola");
+   LCD_write_string("123");
 
 
    /* ------------- REPETIR POR SIEMPRE ------------- */
