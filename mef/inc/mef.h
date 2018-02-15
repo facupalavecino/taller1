@@ -51,7 +51,7 @@ extern "C" {
 
 /*==================[typedef]================================================*/
 
-typedef enum {INICIAL, CONFIG_WIFI, CONFIG_HORA, SET_DESCARGA, SET_POSICION} estado;
+typedef enum {INICIAL, CONFIG_WIFI, CONFIG_HORA, SET_DESCARGA, SET_PORCION} estado;
 
 void MEF_init(void);
 
@@ -65,7 +65,7 @@ void MEF_actualizarCONFIG_HORA(void);
 
 void MEF_actualizarSET_DESCARGA(void);
 
-void MEF_actualizarSET_POSICION(void);
+void MEF_actualizarSET_PORCION(void);
 
 /*==================[external data declaration]==============================*/
 

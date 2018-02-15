@@ -57,13 +57,7 @@
 
 
 /* FUNCION PRINCIPAL, PUNTO DE ENTRADA AL PROGRAMA LUEGO DE RESET. */
-int main(void){
-
-   /* ------------- INICIALIZACIONES ------------- */
-
-   /* Inicializar la placa */
-	/*Acá se configuran los LEDS como salida*/
-   boardConfig();
+int INIT_KEYBOARD(void){
 
    /* Configuracion de pines para el Teclado Matricial*/
 
@@ -88,165 +82,15 @@ int main(void){
 
    keypadConfig( &keypad, keypadRowPins, 4, keypadColPins, 4 );
 
+   return 0;
+}
 
-   // Vector de conversion entre indice de tecla presionada y el Ã­ndice del
-   // display 7 segmentos
+uint8_t keypad_key (uint8_t ntecla){
+
+   // Vector de conversion entre indice de tecla presionada y el indice del display 7 segmentos
    char keypadToChar[16] = {'1','2','3','A','4','5','6','B','7','8','9','C','*','0','#','D'};
+   return keypadToChar[ntecla];
 
-   // Variable para guardar la tecla leida
-   uint16_t tecla = 0;
-   int i;
-
-   /* ------------- REPETIR POR SIEMPRE ------------- */
-   while(1) {
-
-      if( keypadRead( &keypad, &tecla ) ){
-         /*Se presionó una tecla, el valor numérico está en la variable 'tecla'*/
-    	 switch(keypadToChar[tecla]){
-    	 case '1':
-    		 /*Prendo LED 1, 1 vez*/
-    		 gpioWrite (LED1, ON);
-    		 delay(100);
-    		 gpioWrite (LED1, OFF);
-    		 break;
-    	 case '2':
-    		 /*Prendo LED 1, 2 veces*/
-    		 for (i = 0; i < 2; i++){
-        		 gpioWrite (LED1, ON);
-        		 delay(100);
-        		 gpioWrite (LED1, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 case '3':
-    		 /*Prendo LED 1, 3 veces*/
-    		 for (i = 0; i < 3; i++){
-        		 gpioWrite (LED1, ON);
-        		 delay(100);
-        		 gpioWrite (LED1, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 case'A':
-    		 /*Prendo LED 1, 4 veces*/
-    		 for (i = 0; i < 4; i++){
-        		 gpioWrite (LED1, ON);
-        		 delay(100);
-        		 gpioWrite (LED1, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 case '4':
-    		 /*Prendo LED 2, 1 vez*/
-    		 gpioWrite(LED2, ON);
-    		 delay(100);
-    		 gpioWrite(LED2, OFF);
-    		 break;
-    	 case '5':
-    		 /*Prendo LED 2, 2 veces*/
-    		 for (i = 0; i < 2; i++){
-        		 gpioWrite(LED2, ON);
-        		 delay(100);
-        		 gpioWrite(LED2, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 case '6':
-    		 /*Prendo LED 2, 3 veces*/
-    		 for (i = 0; i < 3; i++){
-        		 gpioWrite(LED2, ON);
-        		 delay(100);
-        		 gpioWrite(LED2, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 case'B':
-    		 /*Prendo LED 2, 4 veces*/
-    		 for (i = 0; i < 4; i++){
-        		 gpioWrite(LED2, ON);
-        		 delay(100);
-        		 gpioWrite(LED2, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 case '7':
-    		 /*Prendo LED 3, 1 vez*/
-    		 gpioWrite(LED3, ON);
-    		 delay(100);
-    		 gpioWrite(LED3, OFF);
-    		 break;
-    	 case '8':
-    		 /*Prendo LED 3, 2 veces*/
-    		 for (i = 0; i < 2; i++){
-        		 gpioWrite(LED3, ON);
-        		 delay(100);
-        		 gpioWrite(LED3, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 case '9':
-    		 /*Prendo LED 3, 3 veces*/
-    		 for (i = 0; i < 3; i++){
-        		 gpioWrite(LED3, ON);
-        		 delay(100);
-        		 gpioWrite(LED3, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 case'C':
-    		 /*Prendo LED 3, 4 veces*/
-    		 for (i = 0; i < 4; i++){
-        		 gpioWrite(LED3, ON);
-        		 delay(100);
-        		 gpioWrite(LED3, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 case '*':
-    		 /*Prendo LED B, 1 vez*/
-    		 gpioWrite(LEDB, ON);
-    		 delay(100);
-    		 gpioWrite(LEDB, OFF);
-    		 break;
-    	 case '0':
-    		 /*Prendo LED B, 2 veces*/
-    		 for(i = 0; i < 2; i++){
-        		 gpioWrite(LEDB, ON);
-        		 delay(100);
-        		 gpioWrite(LEDB, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 case '#':
-    		 /*Prendo LED B, 3 veces*/
-    		 for(i = 0; i < 3; i++){
-        		 gpioWrite(LEDB, ON);
-        		 delay(100);
-        		 gpioWrite(LEDB, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 case'D':
-    		 /*Prendo LED B, 4 veces*/
-    		 for(i = 0; i < 4; i++){
-        		 gpioWrite(LEDB, ON);
-        		 delay(100);
-        		 gpioWrite(LEDB, OFF);
-        		 delay(100);
-    		 }
-    		 break;
-    	 default:
-    		 break;
-    	 }
-
-      } else{
-         /*No se presionó nada*/
-      }
-   }
-
-   /* NO DEBE LLEGAR NUNCA AQUI, debido a que a este programa no es llamado
-      por ningun S.O. */
-   return 0 ;
 }
 
 /*==================[end of file]============================================*/
