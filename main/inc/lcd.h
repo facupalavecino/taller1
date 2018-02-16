@@ -38,7 +38,7 @@
 
 /*==================[inclusions]=============================================*/
 
-#include "sapi.h"
+//#include "sapi.h"
 
 // The following defines set the default pins for the LCD display
 #ifndef LCD_ENABLE			 // if lcd_enable is not defined

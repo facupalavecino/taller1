@@ -1,5 +1,4 @@
 #include "mef.h"
-#include "types.h"
 
 estado e;
 
@@ -7,7 +6,7 @@ void MEF_init(void) {
 	e = INICIAL;
 }
 
-void MEF_avanzarESTADO(uint8 t) {
+void MEF_avanzarESTADO(uint8_t t) {
 	switch (e) {
 	case INICIAL:
 		MEF_actualizarINICIAL();

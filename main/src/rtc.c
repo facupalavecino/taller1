@@ -38,7 +38,8 @@
 /*==================[inclusions]=============================================*/
 
 #include "rtc.h"   // <= own header (optional)
-#include "sapi.h"    // <= sAPI header
+#include "sapi_rtc.h"    // <= sAPI header
+#include "sapi_delay.h"
 #include "board.h"
 /*==================[macros and definitions]=================================*/
 
@@ -94,62 +95,62 @@ char* itoa(int value, char* result, int base) {
 
 /* Enviar fecha y hora en formato "DD/MM/YYYY, HH:MM:SS" */
 void showDateAndTime(rtc_t * rtc) {
-	/* Conversion de entero a ascii con base decimal */
-	itoa((int) (rtc->mday), (char*) uartBuff, 10); /* 10 significa decimal */
-	/* Envio el dia */
-	if ((rtc->mday) < 10)
-		uartWriteByte(UART_USB, '0');
-	uartWriteString(UART_USB, uartBuff);
-	uartWriteByte(UART_USB, '/');
-
-	/* Conversion de entero a ascii con base decimal */
-	itoa((int) (rtc->month), (char*) uartBuff, 10); /* 10 significa decimal */
-	/* Envio el mes */
-	if ((rtc->month) < 10)
-		uartWriteByte(UART_USB, '0');
-	uartWriteString(UART_USB, uartBuff);
-	uartWriteByte(UART_USB, '/');
-
-	/* Conversion de entero a ascii con base decimal */
-	itoa((int) (rtc->year), (char*) uartBuff, 10); /* 10 significa decimal */
-	/* Envio el año */
-	if ((rtc->year) < 10)
-		uartWriteByte(UART_USB, '0');
-	uartWriteString(UART_USB, uartBuff);
-
-	uartWriteString(UART_USB, ", ");
-
-	/* Conversion de entero a ascii con base decimal */
-	itoa((int) (rtc->hour), (char*) uartBuff, 10); /* 10 significa decimal */
-	/* Envio la hora */
-	if ((rtc->hour) < 10)
-		uartWriteByte(UART_USB, '0');
-	uartWriteString(UART_USB, uartBuff);
-	uartWriteByte(UART_USB, ':');
-
-	/* Conversion de entero a ascii con base decimal */
-	itoa((int) (rtc->min), (char*) uartBuff, 10); /* 10 significa decimal */
-	/* Envio los minutos */
-	// uartBuff[2] = 0;    /* NULL */
-	if ((rtc->min) < 10)
-		uartWriteByte(UART_USB, '0');
-	uartWriteString(UART_USB, uartBuff);
-	uartWriteByte(UART_USB, ':');
-
-	/* Conversion de entero a ascii con base decimal */
-	itoa((int) (rtc->sec), (char*) uartBuff, 10); /* 10 significa decimal */
-	/* Envio los segundos */
-	if ((rtc->sec) < 10)
-		uartWriteByte(UART_USB, '0');
-	uartWriteString(UART_USB, uartBuff);
-
-	/* Envio un 'enter' */
-	uartWriteString(UART_USB, "\r\n");
+//	/* Conversion de entero a ascii con base decimal */
+//	itoa((int) (rtc->mday), (char*) uartBuff, 10); /* 10 significa decimal */
+//	/* Envio el dia */
+//	if ((rtc->mday) < 10)
+//		uartWriteByte(UART_USB, '0');
+//	uartWriteString(UART_USB, uartBuff);
+//	uartWriteByte(UART_USB, '/');
+//
+//	/* Conversion de entero a ascii con base decimal */
+//	itoa((int) (rtc->month), (char*) uartBuff, 10); /* 10 significa decimal */
+//	/* Envio el mes */
+//	if ((rtc->month) < 10)
+//		uartWriteByte(UART_USB, '0');
+//	uartWriteString(UART_USB, uartBuff);
+//	uartWriteByte(UART_USB, '/');
+//
+//	/* Conversion de entero a ascii con base decimal */
+//	itoa((int) (rtc->year), (char*) uartBuff, 10); /* 10 significa decimal */
+//	/* Envio el año */
+//	if ((rtc->year) < 10)
+//		uartWriteByte(UART_USB, '0');
+//	uartWriteString(UART_USB, uartBuff);
+//
+//	uartWriteString(UART_USB, ", ");
+//
+//	/* Conversion de entero a ascii con base decimal */
+//	itoa((int) (rtc->hour), (char*) uartBuff, 10); /* 10 significa decimal */
+//	/* Envio la hora */
+//	if ((rtc->hour) < 10)
+//		uartWriteByte(UART_USB, '0');
+//	uartWriteString(UART_USB, uartBuff);
+//	uartWriteByte(UART_USB, ':');
+//
+//	/* Conversion de entero a ascii con base decimal */
+//	itoa((int) (rtc->min), (char*) uartBuff, 10); /* 10 significa decimal */
+//	/* Envio los minutos */
+//	// uartBuff[2] = 0;    /* NULL */
+//	if ((rtc->min) < 10)
+//		uartWriteByte(UART_USB, '0');
+//	uartWriteString(UART_USB, uartBuff);
+//	uartWriteByte(UART_USB, ':');
+//
+//	/* Conversion de entero a ascii con base decimal */
+//	itoa((int) (rtc->sec), (char*) uartBuff, 10); /* 10 significa decimal */
+//	/* Envio los segundos */
+//	if ((rtc->sec) < 10)
+//		uartWriteByte(UART_USB, '0');
+//	uartWriteString(UART_USB, uartBuff);
+//
+//	/* Envio un 'enter' */
+//	uartWriteString(UART_USB, "\r\n");
 }
 
 
 /* FUNCION PRINCIPAL, PUNTO DE ENTRADA AL PROGRAMA LUEGO DE RESET. */
-int main(void) {
+void configRTC (void) {
 
 	/* ------------- INICIALIZACIONES ------------- */
 
@@ -202,7 +203,6 @@ int main(void) {
 
    /* NO DEBE LLEGAR NUNCA AQUI, debido a que a este programa no es llamado
       por ningun S.O. */
-   return 0 ;
 }
 
 /*==================[end of file]============================================*/

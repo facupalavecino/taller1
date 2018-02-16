@@ -1,4 +1,4 @@
-/* Copyright 2015-2016, Eric Pernia.
+/* Copyright 2016, Eric Pernia.
  * All rights reserved.
  *
  * This file is part sAPI library for microcontrollers.
@@ -31,51 +31,66 @@
  *
  */
 
-/* Date: 2015-09-23 */
-
-#ifndef MEF_H_
-#define MEF_H_
+/*
+ * Date: 2016-07-28
+ */
 
 /*==================[inclusions]=============================================*/
 
-#include "sapi.h"
+#include "teclado_matricial.h"          /* <= own header */
 
-/*==================[cplusplus]==============================================*/
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "sapi_keypad.h"                     /* <= sAPI header */
 
-/*==================[macros]=================================================*/
+/*==================[macros and definitions]=================================*/
 
-#define BUS_CLOCK 8000
+/*==================[internal data declaration]==============================*/
 
-/*==================[typedef]================================================*/
+/*==================[internal functions declaration]=========================*/
 
-typedef enum {INICIAL, CONFIG_WIFI, CONFIG_HORA, SET_DESCARGA, SET_PORCION} estado;
+/*==================[internal data definition]===============================*/
 
-void MEF_init(void);
+/*==================[external data definition]===============================*/
 
-void MEF_avanzarESTADO (uint8 tecla);
+/*==================[internal functions definition]==========================*/
 
-void MEF_actualizarINICIAL(void);
+/*==================[external functions definition]==========================*/
 
-void MEF_actualizarCONFIG_WIFI(void);
 
-void MEF_actualizarCONFIG_HORA(void);
+/* FUNCION PRINCIPAL, PUNTO DE ENTRADA AL PROGRAMA LUEGO DE RESET. */
+int INIT_KEYBOARD(void){
 
-void MEF_actualizarSET_DESCARGA(void);
+   /* Configuracion de pines para el Teclado Matricial*/
 
-void MEF_actualizarSET_PORCION(void);
+   // Teclado
+   keypad_t keypad;
 
-/*==================[external data declaration]==============================*/
+   // Filas --> Salidas
+   uint8_t keypadRowPins[4] = {
+      T_FIL0,	 // Row 0
+      T_FIL1,    // Row 1
+      T_FIL2,    // Row 2
+      T_FIL3     // Row 3
+   };
 
-/*==================[external functions declaration]=========================*/
+   // Columnas --> Entradas con pull-up (MODO = GPIO_INPUT_PULLUP)
+   uint8_t keypadColPins[4] = {
+      T_COL0,    // Column 0
+      T_COL1,    // Column 1
+      T_COL2,    // Column 2
+      CAN_TD     // Column 3
+   };
 
-/*==================[cplusplus]==============================================*/
+   keypadConfig( &keypad, keypadRowPins, 4, keypadColPins, 4 );
 
-#ifdef __cplusplus
+   return 0;
 }
-#endif
+
+uint8_t keypad_key (uint8_t ntecla){
+
+   // Vector de conversion entre indice de tecla presionada y el indice del display 7 segmentos
+   char keypadToChar[16] = {'1','2','3','A','4','5','6','B','7','8','9','C','*','0','#','D'};
+   return keypadToChar[ntecla];
+
+}
 
 /*==================[end of file]============================================*/
-#endif /* #ifndef MEF_H_ */

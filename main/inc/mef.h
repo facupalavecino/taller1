@@ -33,17 +33,50 @@
 
 /* Date: 2015-09-23 */
 
-#ifndef _TECLADO_MATRICIAL_H_
-#define _TECLADO_MATRICIAL_H_
+#ifndef MEF_H_
+#define MEF_H_
 
+/*==================[inclusions]=============================================*/
+
+#include "sapi.h"
+#include "stdint.h"
+
+/*==================[cplusplus]==============================================*/
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-uint8_t keypad_key (uint8_t ntecla);
+/*==================[macros]=================================================*/
 
-int INIT_KEYBOARD(void);
+#define BUS_CLOCK 8000
 
+/*==================[typedef]================================================*/
+
+typedef enum {INICIAL, CONFIG_WIFI, CONFIG_HORA, SET_DESCARGA, SET_PORCION} estado;
+
+void MEF_init(void);
+
+void MEF_avanzarESTADO (uint8_t tecla);
+
+void MEF_actualizarINICIAL(void);
+
+void MEF_actualizarCONFIG_WIFI(void);
+
+void MEF_actualizarCONFIG_HORA(void);
+
+void MEF_actualizarSET_DESCARGA(void);
+
+void MEF_actualizarSET_PORCION(void);
+
+/*==================[external data declaration]==============================*/
+
+/*==================[external functions declaration]=========================*/
+
+/*==================[cplusplus]==============================================*/
+
+#ifdef __cplusplus
+}
+#endif
 
 /*==================[end of file]============================================*/
-#endif /* #ifndef _TECLADO_MATRICIAL_H_ */
+#endif /* #ifndef MEF_H_ */

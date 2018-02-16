@@ -13,6 +13,7 @@
  * 
  */
 #include "lcd.h"
+#include "sapi.h"
 
 union ubyte
 {
