@@ -70,6 +70,12 @@ void MEF_avanzarESTADO(uint8_t t) {
 			gpioWrite(LEDB,OFF);
 			break;
 		default:
+			LCD_write_string(itoa(rtc.hour));
+				LCD_write_char(':');
+				LCD_write_string(itoa(rtc.min));
+				LCD_write_char(':');
+				LCD_write_string(rtc.sec);
+				delayInaccurate(1000);
 			break;
 		}
 		break;
@@ -152,43 +158,7 @@ void MEF_avanzarESTADO(uint8_t t) {
 		}
 		break;
 	case SET_DESCARGA:
-		switch (t) {
-		/* Poner cada tecla */
-		case '*':
-			break;
-		case '#':
-			break;
-		case '1':
-			break;
-		case '2':
-			break;
-		case '3':
-			break;
-		case '4':
-			break;
-		case '7':
-			break;
-		case '5':
-			break;
-		case '8':
-			break;
-		case '6':
-			break;
-		case '9':
-			break;
-		case 'A':
-			break;
-		case 'B':
-			break;
-		case 'C':
-			break;
-		case 'D':
-			break;
-		case '0':
-			e = INICIAL;
-			break;
-		}
-		break;
+
 	case SET_PORCION:
 		switch (t) {
 		/* Poner cada tecla */
@@ -245,6 +215,9 @@ void MEF_actualizarCONFIG_HORA(void) {
 	LCD_write_string("    Estado A    ");
 	LCD_pos_xy(0,1);
 	LCD_write_string("  CONFIG_HORA   ");
+	LCD_delay_ms(2000);
+	LCD_pos_xy(4,0);
+	LCD_cursor_blink_on();
 }
 
 void MEF_actualizarSET_DESCARGA(void) {
