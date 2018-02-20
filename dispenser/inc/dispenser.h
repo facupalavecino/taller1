@@ -33,19 +33,30 @@
 
 /* Date: 2015-09-23 */
 
-#ifndef _TECLADO_MATRICIAL_H_
-#define _TECLADO_MATRICIAL_H_
+#ifndef _BLINKY_H_
+#define _BLINKY_H_
+
+/*==================[inclusions]=============================================*/
+
+/*==================[cplusplus]==============================================*/
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "stdint.h"
+/*==================[macros]=================================================*/
 
-uint8_t keypad_key (uint8_t ntecla);
+/*==================[typedef]================================================*/
 
-int INIT_KEYBOARD(void);
+/*==================[external data declaration]==============================*/
 
+/*==================[external functions declaration]=========================*/
+
+/*==================[cplusplus]==============================================*/
+
+#ifdef __cplusplus
+}
+#endif
 
 /*==================[end of file]============================================*/
-#endif /* #ifndef _TECLADO_MATRICIAL_H_ */
+#endif /* #ifndef _BLINKY_H_ */

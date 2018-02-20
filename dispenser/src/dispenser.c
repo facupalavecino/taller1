@@ -32,19 +32,25 @@
  */
 
 /*
- * Date: 2016-07-28
+ * Date: 2016-04-26
  */
 
 /*==================[inclusions]=============================================*/
 
-#include "teclado_matricial.h"          /* <= own header */
+#include "dispenser.h"       /* <= own header */
+#include "teclado_matricial.h"
+#include "lcd.h"
+#include "stepper.h"
+#include "mef.h"
 
-#include "sapi_keypad.h"                     /* <= sAPI header */
+#include <stdlib.h>
+
+#include "sapi.h"         /* <= sAPI header */
 
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
-
+keypad_t keypad;
 /*==================[internal functions declaration]=========================*/
 
 /*==================[internal data definition]===============================*/
@@ -55,42 +61,58 @@
 
 /*==================[external functions definition]==========================*/
 
-
 /* FUNCION PRINCIPAL, PUNTO DE ENTRADA AL PROGRAMA LUEGO DE RESET. */
-int INIT_KEYBOARD(void){
+int main(void){
 
-   /* Configuracion de pines para el Teclado Matricial*/
+	//Inicializar placa
+		boardConfig();
+		//Inicializar LCD
+		LCD_init (_2_LINES | DISPLAY_8X5, CURSOR_OFF | DISPLAY_ON);
+		//Inicializar cfg del teclado
+		uint16_t nro_tecla = 0;
+		uint8_t tecla_recibida;
+		//INIT_KEYBOARD();
+		/* Configuracion de pines para el Teclado Matricial*/
 
-   // Teclado
-   keypad_t keypad;
+		   // Filas --> Salidas
+		   uint8_t keypadRowPins[4] = {
+		      T_FIL0,	 // Row 0
+		      T_FIL1,    // Row 1
+		      T_FIL2,    // Row 2
+		      T_FIL3     // Row 3
+		   };
 
-   // Filas --> Salidas
-   uint8_t keypadRowPins[4] = {
-      T_FIL0,	 // Row 0
-      T_FIL1,    // Row 1
-      T_FIL2,    // Row 2
-      T_FIL3     // Row 3
-   };
+		   // Columnas --> Entradas con pull-up (MODO = GPIO_INPUT_PULLUP)
+		   uint8_t keypadColPins[4] = {
+		      T_COL0,    // Column 0
+		      T_COL1,    // Column 1
+		      T_COL2,    // Column 2
+		      CAN_TD     // Column 3
+		   };
 
-   // Columnas --> Entradas con pull-up (MODO = GPIO_INPUT_PULLUP)
-   uint8_t keypadColPins[4] = {
-      T_COL0,    // Column 0
-      T_COL1,    // Column 1
-      T_COL2,    // Column 2
-      CAN_TD     // Column 3
-   };
+		   keypadConfig(&keypad, keypadRowPins, 4, keypadColPins, 4 );
 
-   keypadConfig( &keypad, keypadRowPins, 4, keypadColPins, 4 );
+		   uint8_t keypad_key (uint8_t ntecla){
 
-   return 0;
-}
+		      // Vector de conversion entre indice de tecla presionada y el indice del display 7 segmentos
+		      char keypadToChar[16] = {'1','2','3','A','4','5','6','B','7','8','9','C','*','0','#','D'};
+		      return keypadToChar[ntecla];
 
-uint8_t keypad_key (uint8_t ntecla){
+		   }
+		//Inicializar MEF
+		MEF_init();
+		//Inicializar ADC
+		adcConfig(ADC_ENABLE);
+		while(1){
+			if (keypadRead(&keypad, &nro_tecla)) {
+				//tecla_recibida = keypad_key(nro_tecla);
+				MEF_avanzarESTADO(keypad_key(nro_tecla));
+			} else {
+				MEF_avanzarESTADO('x');
+			}
+		}
 
-   // Vector de conversion entre indice de tecla presionada y el indice del display 7 segmentos
-   char keypadToChar[16] = {'1','2','3','A','4','5','6','B','7','8','9','C','*','0','#','D'};
-   return keypadToChar[ntecla];
-
+		return 0;
 }
 
 /*==================[end of file]============================================*/

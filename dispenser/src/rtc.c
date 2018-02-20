@@ -93,6 +93,15 @@ char* itoa(int value, char* result, int base) {
 	return result;
 }
 
+int my_atoi(char *p) {
+    int k = 0;
+    while (*p) {
+        k = (k<<3)+(k<<1)+(*p)-'0';
+        p++;
+     }
+     return k;
+}
+
 /* Enviar fecha y hora en formato "DD/MM/YYYY, HH:MM:SS" */
 void showDateAndTime(rtc_t * rtc) {
 //	/* Conversion de entero a ascii con base decimal */
