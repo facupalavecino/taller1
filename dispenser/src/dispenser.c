@@ -42,9 +42,8 @@
 #include "lcd.h"
 #include "stepper.h"
 #include "mef.h"
-
+#include "rtc.h"
 #include <stdlib.h>
-
 #include "sapi.h"         /* <= sAPI header */
 
 /*==================[macros and definitions]=================================*/
@@ -63,7 +62,6 @@ keypad_t keypad;
 
 /* FUNCION PRINCIPAL, PUNTO DE ENTRADA AL PROGRAMA LUEGO DE RESET. */
 int main(void){
-
 	//Inicializar placa
 		boardConfig();
 		//Inicializar LCD
@@ -71,7 +69,8 @@ int main(void){
 		//Inicializar cfg del teclado
 		uint16_t nro_tecla = 0;
 		uint8_t tecla_recibida;
-		//INIT_KEYBOARD();
+
+		INIT_KEYBOARD();
 		/* Configuracion de pines para el Teclado Matricial*/
 
 		   // Filas --> Salidas
@@ -103,6 +102,7 @@ int main(void){
 		MEF_init();
 		//Inicializar ADC
 		adcConfig(ADC_ENABLE);
+		configRTC();
 		while(1){
 			if (keypadRead(&keypad, &nro_tecla)) {
 				//tecla_recibida = keypad_key(nro_tecla);

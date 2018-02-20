@@ -1,8 +1,1 @@
-### Taller de Proyecto 1
-### Dispenser Automático
-
-Para poder trabajar con esto:
-
-- Posicionarse en la carpeta del Firmware v2.
-- Crear una carpeta llamada 'projects'
-- Clonar el repositorio dentro de esta carpeta.
+In this folder you can add your personal projects. They will be ignored by this repository.

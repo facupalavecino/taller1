@@ -53,7 +53,7 @@
 
 /* Buffer */
 static char uartBuff[10];
-
+rtc_t rtc;
 /*==================[internal functions definition]==========================*/
 
 /*==================[external functions definition]==========================*/
@@ -167,19 +167,19 @@ void configRTC (void) {
 	boardConfig();
 
 	/* Inicializar UART_USB a 115200 baudios */
-	uartConfig(UART_USB, 115200);
+	// uartConfig(UART_USB, 115200);
 	// Configurar la hora del RTC
 	//bool_t val;
 	bool_t val = 0;
 
-	rtc_t rtc;
+
 	rtc.sec = 0;
-	rtc.min = 20;
-	rtc.hour = 11;
+	rtc.min = 01;
+	rtc.hour = 00;
 	rtc.mday = 7;
 	rtc.wday = 5;
-	rtc.month = 12;
-	rtc.year = 17;
+	rtc.month = 02;
+	rtc.year = 18;
 	//val =
 	rtcConfig(&rtc);
 	delay_t delay1s;
@@ -195,20 +195,20 @@ void configRTC (void) {
 	//unsigned short int state = 1;
 	/* ------------- REPETIR POR SIEMPRE ------------- */
 
-	while (1) {
+	// while (1) {
 
-		gpioWrite(LED1, ON);
-		if (delayRead(&delay1s)) {
+		//gpioWrite(LED1, ON);
+		//if (delayRead(&delay1s)) {
 			/* Leer fecha y hora */
-			val = rtcRead(&rtc);
-			if (rtc.hour == hour && rtc.min == min) {
-				Board_LED_Toggle(LEDB);
-			}
+		//	val = rtcRead(&rtc);
+		//	if (rtc.hour == hour && rtc.min == min) {
+		//		Board_LED_Toggle(LEDB);
+		//	}
 			/* Mostrar fecha y hora en formato "DD/MM/YYYY, HH:MM:SS" */
-			showDateAndTime(&rtc);
-		}
+		//	showDateAndTime(&rtc);
+	//	}
 
-	}
+//	}
 
    /* NO DEBE LLEGAR NUNCA AQUI, debido a que a este programa no es llamado
       por ningun S.O. */
