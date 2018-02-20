@@ -42,7 +42,7 @@
 #include "lcd.h"
 #include "stepper.h"
 #include "mef.h"
-
+#include "rtc.h"
 #include <stdlib.h>
 
 #include "sapi.h"         /* <= sAPI header */
@@ -51,6 +51,8 @@
 
 /*==================[internal data declaration]==============================*/
 keypad_t keypad;
+static char bufferRtc[16];
+extern rtc_t rtc;
 /*==================[internal functions declaration]=========================*/
 
 /*==================[internal data definition]===============================*/
@@ -107,13 +109,25 @@ int main(void) {
 	MEF_init();
 	//Inicializar ADC
 	adcConfig(ADC_ENABLE);
+	configRTC();
 	while (1) {
-		if (keypadRead(&keypad, &nro_tecla)) {
+		rtcRead(&rtc);
+	//	LCD_pos_xy(4,0);
+	//	LCD_write_string(itoa(rtc.hour,bufferRtc,10));
+	//	LCD_pos_xy(6,0);
+	//	LCD_write_string(itoa(rtc.min,bufferRtc,10));
+		LCD_pos_xy(8,0);
+		LCD_write_string(itoa(rtc.sec,bufferRtc,10));
+		delay(2000);
+
+		//if (keypadRead(&keypad, &nro_tecla)) {LCD_pos_xy(4,0);
+
+
 			//tecla_recibida = keypad_key(nro_tecla);
-			MEF_avanzarESTADO(keypad_key(nro_tecla));
-		} else {
-			MEF_avanzarESTADO('x');
-		}
+		//	MEF_avanzarESTADO(keypad_key(nro_tecla));
+		//} else {
+		//	MEF_avanzarESTADO('x');
+		//}
 	}
 
 	return 0;
