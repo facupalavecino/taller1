@@ -117,3 +117,7 @@ void updateTime(){
 		val = rtcRead(&rtc);
 	}
 }
+
+void setTime(){
+
+}
