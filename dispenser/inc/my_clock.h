@@ -14,7 +14,7 @@ char* itoa(int value, char* result, int base);
 void configTime();
 void showTime(char line);
 void updateTime();
-
+void setTime(rtc_t rtc_aux);
 void step(int16_t steps_to_move);
 
 /*==================[cplusplus]==============================================*/

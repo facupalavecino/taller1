@@ -118,6 +118,7 @@ void updateTime(){
 	}
 }
 
-void setTime(){
-
+void setTime(rtc_t rtc_aux){
+	val = rtcWrite(&rtc_aux);
+	//delay(200);
 }

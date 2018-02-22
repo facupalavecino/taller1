@@ -62,7 +62,7 @@ void MEF_actualizarINICIAL(void);
 
 void MEF_actualizarCONFIG_WIFI(void);
 
-void MEF_actualizarCONFIG_HORA(void);
+void MEF_actualizarCONFIG_HORA(uint8_t tecla);
 
 void MEF_actualizarSET_DESCARGA(void);
 

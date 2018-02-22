@@ -43,7 +43,7 @@
 #include "stepper.h"
 #include "mef.h"
 #include <stdlib.h>
-#include "my_clock.h";
+#include "my_clock.h"
 
 #include "sapi.h"         /* <= sAPI header */
 
