@@ -81,7 +81,11 @@ void MEF_avanzarESTADO(uint8_t t) {
 			break;
 		case 'D':
 			e = SET_DESCARGA;
-			MEF_actualizarSET_DESCARGA();
+			LCD_pos_xy(0, 0);
+			LCD_write_string("A)10:30  B)15:30");
+			LCD_pos_xy(0, 1);
+			LCD_write_string("C)18:30  D)20:30");
+			//MEF_actualizarSET_DESCARGA();
 			break;
 		case '0':
 			gpioWrite(LEDR, OFF);
@@ -136,42 +140,7 @@ void MEF_avanzarESTADO(uint8_t t) {
 		MEF_actualizarCONFIG_HORA(t);
 		break;
 	case SET_DESCARGA:
-		switch (t) {
-		/* Poner cada tecla */
-		case '*':
-			break;
-		case '#':
-			break;
-		case '1':
-			break;
-		case '2':
-			break;
-		case '3':
-			break;
-		case '4':
-			break;
-		case '7':
-			break;
-		case '5':
-			break;
-		case '8':
-			break;
-		case '6':
-			break;
-		case '9':
-			break;
-		case 'A':
-			break;
-		case 'B':
-			break;
-		case 'C':
-			break;
-		case 'D':
-			break;
-		case '0':
-			e = INICIAL;
-			break;
-		}
+		MEF_actualizarSET_DESCARGA(t);
 		break;
 	case SET_PORCION:
 		switch (t) {
@@ -287,14 +256,52 @@ void MEF_actualizarCONFIG_HORA(uint8_t tecla) {
 }
 
 
-void MEF_actualizarSET_DESCARGA(void) {
-	int muestra = 0;
-	muestra = adcRead(CH3);
-	itoa(muestra, lcdBuffer, 10);
-	LCD_pos_xy(0, 0);
-	LCD_write_string("  Valor Leido   ");
-	LCD_pos_xy(0, 1);
-	LCD_write_string(lcdBuffer);
+void MEF_actualizarSET_DESCARGA(uint8_t tecla) {
+	//int muestra = 0;
+	//muestra = adcRead(CH3);
+	//itoa(muestra, lcdBuffer, 10);
+	//LCD_pos_xy(0, 0);
+	//LCD_write_string("  Valor Leido   ");
+	//LCD_pos_xy(0, 1);
+	//LCD_write_string(lcdBuffer);
+
+	switch (tecla) {
+		/* Poner cada tecla */
+		case '*':
+			e = INICIAL;
+			break;
+		case '#':
+			e = INICIAL;
+			break;
+		case '1':
+			break;
+		case '2':
+			break;
+		case '3':
+			break;
+		case '4':
+			break;
+		case '7':
+			break;
+		case '5':
+			break;
+		case '8':
+			break;
+		case '6':
+			break;
+		case '9':
+			break;
+		case 'A':
+			break;
+		case 'B':
+			break;
+		case 'C':
+			break;
+		case 'D':
+			break;
+		case '0':
+			break;
+		}
 }
 
 void MEF_actualizarSET_PORCION(void) {
