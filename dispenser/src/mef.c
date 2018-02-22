@@ -276,6 +276,7 @@ void MEF_actualizarCONFIG_HORA(uint8_t tecla) {
 			}
 			delay(200); // Agrego delay porque si no lee como que ingresaste la misma tecla más de una vez.
 		}
+		LCD_pos_xy(cursor, 0);
 		break;
 	case 'A':
 	case 'B':
