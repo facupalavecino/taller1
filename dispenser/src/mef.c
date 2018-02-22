@@ -58,7 +58,7 @@ void MEF_avanzarESTADO(uint8_t t) {
 			e = CONFIG_HORA;
 			showTime(0);
 			LCD_pos_xy(0, 1);
-			LCD_write_string("  CONFIG_HORA   ");
+			LCD_write_string("Configurar Hora ");
 			cursor = 4;
 			LCD_pos_xy(cursor, 0);
 			LCD_cursor_blink_on();
@@ -258,7 +258,7 @@ void MEF_actualizarCONFIG_HORA(uint8_t tecla) {
 	case '7':
 	case '8':
 	case '9':
-		if((cursor==4 && (tecla<'3')) || (hora_int[4]==2 && cursor==5 && (tecla<'4')) || (hora_int[4]<2 && cursor==5) || (cursor==7 && (tecla<'6')) || (cursor == 8) || (cursor ==10 && (tecla<'6')) || (cursor == 11)) {
+		if((cursor==4 && (tecla<'2') && hora_int[5]>=4) || (cursor==4 && (tecla<'3') && hora_int[5]<4) || (hora_int[4]==2 && cursor==5 && (tecla<'4')) || (hora_int[4]<2 && cursor==5) || (cursor==7 && (tecla<'6')) || (cursor == 8) || (cursor ==10 && (tecla<'6')) || (cursor == 11)) {
 			hora_int[cursor] = tecla - '0';
 			LCD_pos_xy(cursor, 0);
 			LCD_write_char(tecla);
