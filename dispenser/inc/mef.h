@@ -66,7 +66,7 @@ void MEF_actualizarCONFIG_HORA(uint8_t tecla);
 
 void MEF_actualizarSET_DESCARGA(uint8_t tecla);
 
-void MEF_actualizarSET_PORCION(void);
+void MEF_actualizarSET_PORCION(uint8_t tecla);
 
 /*==================[external data declaration]==============================*/
 

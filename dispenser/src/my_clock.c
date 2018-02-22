@@ -39,6 +39,11 @@ char* itoa(int value, char* result, int base) {
 
 void configTime() {
 
+	LCD_pos_xy(0, 0);
+	LCD_write_string("  Iniciando...  ");
+	LCD_pos_xy(0, 1);
+	LCD_write_string("##");
+
 	rtc.year = 2016;
 	rtc.month = 7;
 	rtc.mday = 3;
@@ -51,14 +56,15 @@ void configTime() {
 	val = rtcConfig(&rtc);
 
 	delayConfig(&delay1s, 1000);
-
 	delay(2000); // El RTC tarda en setear la hora, por eso el delay
-
+	LCD_write_string("####");
 	for (i = 0; i < 10; i++) {
 		/* Leer fecha y hora */
 		val = rtcRead(&rtc);
 		/* Mostrar fecha y hora en formato "DD/MM/YYYY, HH:MM:SS" */
 		// showTime(1);
+		LCD_pos_xy(i + 6, 1);
+		LCD_write_string("#");
 		delay(1000);
 	}
 
@@ -75,10 +81,10 @@ void configTime() {
 }
 
 void showTime(char line) {
-	if (line > 0){
+	if (line > 0) {
 		line = 1;
 	}
-	LCD_pos_xy(0,line);
+	LCD_pos_xy(0, line);
 	LCD_write_string("    ");
 	LCD_pos_xy(4, line);
 	if (rtc.hour > 9) {
@@ -111,14 +117,14 @@ void showTime(char line) {
 	LCD_write_string("    ");
 }
 
-void updateTime(){
+void updateTime() {
 	if (delayRead(&delay1s)) {
 		/* Leer fecha y hora */
 		val = rtcRead(&rtc);
 	}
 }
 
-void setTime(rtc_t rtc_aux){
+void setTime(rtc_t rtc_aux) {
 	val = rtcWrite(&rtc_aux);
 	//delay(200);
 }
