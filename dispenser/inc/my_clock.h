@@ -17,6 +17,9 @@ void updateTime();
 void setTime(rtc_t rtc_aux);
 void step(int16_t steps_to_move);
 
+void showAlarma(char line, rtc_t rtc1);
+void pantallaAlarmas(rtc_t rtc1[]);
+
 /*==================[cplusplus]==============================================*/
 
 #ifdef __cplusplus

@@ -64,7 +64,7 @@ void MEF_actualizarCONFIG_WIFI(void);
 
 void MEF_actualizarCONFIG_HORA(uint8_t tecla);
 
-void MEF_actualizarSET_DESCARGA(uint8_t tecla);
+void MEF_actualizarSET_DESCARGA(uint8_t t);
 
 void MEF_actualizarSET_PORCION(uint8_t tecla);
 
