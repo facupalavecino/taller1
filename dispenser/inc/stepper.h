@@ -12,6 +12,8 @@ extern "C" {
 
 void stepMotor(uint8_t thisStep);
 
+void stepMotorOG(uint8_t thisStep);
+
 void step(int16_t steps_to_move);
 
 /*==================[cplusplus]==============================================*/

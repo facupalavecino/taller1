@@ -10,9 +10,9 @@ tick_t last_step_time = 0;
 tick_t step_delay = 20;
 extern volatile tick_t tickRateMS;
 
-void stepMotor(uint8_t thisStep) {
+void stepMotorOG(uint8_t thisStep) {
 	switch (thisStep) {
-	case 0:  // 1010
+	case 0:  // 0101
 		gpioWrite(GPIO1, OFF);
 		gpioWrite(GPIO2, ON);
 		gpioWrite(GPIO3, OFF);
@@ -24,7 +24,7 @@ void stepMotor(uint8_t thisStep) {
 		gpioWrite(GPIO3, ON);
 		gpioWrite(GPIO4, OFF);
 		break;
-	case 2:  //0101
+	case 2:  //1010
 		gpioWrite(GPIO1, ON);
 		gpioWrite(GPIO2, OFF);
 		gpioWrite(GPIO3, ON);
@@ -35,6 +35,35 @@ void stepMotor(uint8_t thisStep) {
 		gpioWrite(GPIO2, OFF);
 		gpioWrite(GPIO3, OFF);
 		gpioWrite(GPIO4, ON);
+		break;
+	}
+}
+
+void stepMotor(uint8_t thisStep) {
+	switch (thisStep) {
+	case 0:
+		gpioWrite(GPIO0, ON);
+		gpioWrite(GPIO7, OFF);
+		gpioWrite(GPIO3, ON);
+		gpioWrite(GPIO5, OFF);
+		break;
+	case 1:
+		gpioWrite(GPIO0, ON);
+		gpioWrite(GPIO7, OFF);
+		gpioWrite(GPIO3, OFF);
+		gpioWrite(GPIO5, ON);
+		break;
+	case 2:
+		gpioWrite(GPIO0, OFF);
+		gpioWrite(GPIO7, ON);
+		gpioWrite(GPIO3, OFF);
+		gpioWrite(GPIO5, ON);
+		break;
+	case 3:
+		gpioWrite(GPIO0, OFF);
+		gpioWrite(GPIO7, ON);
+		gpioWrite(GPIO3, ON);
+		gpioWrite(GPIO5, OFF);
 		break;
 	}
 }

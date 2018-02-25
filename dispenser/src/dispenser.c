@@ -66,7 +66,7 @@ keypad_t keypad;
 int main(void) {
 
 	//Inicializar placa
-      	boardConfig();
+	boardConfig();
 	//Inicializar LCD
 	LCD_init(_2_LINES | DISPLAY_8X5, CURSOR_OFF | DISPLAY_ON);
 	//Inicializar cfg del teclado
@@ -100,20 +100,27 @@ int main(void) {
 
 	}
 	//Configuracion pines para motor
-//	gpioConfig(GPIO2, GPIO_OUTPUT); // ENABLE A
-//	gpioConfig(GPIO8, GPIO_OUTPUT); // ENABLE B
-//	gpioWrite(GPIO2, ON);
-//	gpioWrite(GPIO8, ON);
+	gpioConfig(GPIO2, GPIO_OUTPUT); // ENABLE A
+	gpioConfig(GPIO8, GPIO_OUTPUT); // ENABLE B
+	gpioWrite(GPIO2, OFF);
+	gpioWrite(GPIO8, OFF);
 
-//	gpioConfig(GPIO0, GPIO_OUTPUT); // Negro
-//	gpioConfig(GPIO7, GPIO_OUTPUT); // Marron
-//	gpioConfig(GPIO3, GPIO_OUTPUT); // Amarillo
-//	gpioConfig(GPIO5, GPIO_OUTPUT); // Naranja
-
-	gpioConfig(GPIO1, GPIO_OUTPUT); // Negro
-	gpioConfig(GPIO2, GPIO_OUTPUT); // Marron
+	//Secuencia orishinal
+	gpioConfig(GPIO0, GPIO_OUTPUT); // Negro
+	gpioConfig(GPIO7, GPIO_OUTPUT); // Marron
 	gpioConfig(GPIO3, GPIO_OUTPUT); // Amarillo
-	gpioConfig(GPIO4, GPIO_OUTPUT); // Naranja
+	gpioConfig(GPIO5, GPIO_OUTPUT); // Naranja
+
+	//Secuencia invert
+//	gpioConfig(GPIO7, GPIO_OUTPUT); // Negro
+//	gpioConfig(GPIO0, GPIO_OUTPUT); // Marron
+//	gpioConfig(GPIO5, GPIO_OUTPUT); // Amarillo
+//	gpioConfig(GPIO3, GPIO_OUTPUT); // Naranja
+
+//	gpioConfig(GPIO1, GPIO_OUTPUT); // Negro
+//	gpioConfig(GPIO2, GPIO_OUTPUT); // Marron
+//	gpioConfig(GPIO3, GPIO_OUTPUT); // Amarillo
+//	gpioConfig(GPIO4, GPIO_OUTPUT); // Naranja
 	//Inicializar MEF
 	MEF_init();
 	//Inicializar ADC

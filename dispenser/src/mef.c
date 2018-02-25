@@ -51,7 +51,7 @@ void MEF_avanzarESTADO(uint8_t t) {
 			gpioWrite(LED1, ON);
 			break;
 		case '2':
-			gpioWrite(LED2, ON);
+
 			break;
 		case '3':
 			gpioWrite(LED3, ON);
@@ -66,11 +66,34 @@ void MEF_avanzarESTADO(uint8_t t) {
 			gpioWrite(LED3, OFF);
 			break;
 		case '7':
-			step(48);
-			step(-24);
-			step(48);
-			step(-24);
-			step(48);
+			LCD_pos_xy(0, 0);
+			LCD_write_string("   Sirviendo    ");
+			int muestra = adcRead(CH3);
+			int gramos = (muestra * 169) / 105 - 125;
+			if (gramos < 15)
+				gramos = 0;
+			itoa(gramos, lcdBuffer, 10);
+			LCD_pos_xy(0, 1);
+			LCD_write_string("      ");
+			LCD_write_string(lcdBuffer);
+			LCD_write_string("      ");
+			while (gramos < porcion) {
+				step(48);
+				step(-24);
+				step(48);
+				muestra = adcRead(CH3);
+				gramos = (muestra * 169) / 105 - 125;
+				if (gramos < 15)
+					gramos = 0;
+				itoa(gramos, lcdBuffer, 10);
+				LCD_pos_xy(0, 1);
+				LCD_write_string("      ");
+				LCD_write_string(lcdBuffer);
+				LCD_write_string("      ");
+			}
+			LCD_pos_xy(0, 0);
+			LCD_write_string("    Servido     ");
+			delay(1500);
 			break;
 		case '8':
 			gpioWrite(LEDB, OFF);
@@ -291,7 +314,8 @@ void MEF_actualizarCONFIG_HORA(uint8_t tecla) {
 			setTime(rtc_aux);
 			int var = 0;
 			for (var = 0; var < 4; ++var) {
-				if (rtcdescarga[estadomodif].hour <= rtc_aux.hour && rtcdescarga[estadomodif].min <= rtc_aux.min)
+				if (rtcdescarga[estadomodif].hour <= rtc_aux.hour
+						&& rtcdescarga[estadomodif].min <= rtc_aux.min)
 					atendida[var] = 1;
 				else
 					atendida[var] = 0;
@@ -413,7 +437,8 @@ void MEF_actualizarSET_DESCARGA(uint8_t t) {
 					&& (rtcdescarga[estadomodif].min < 60)) {
 				activada[estadomodif] = auxactivada;
 				val = rtcRead(&rtc_aux);
-				if (rtcdescarga[estadomodif].hour <= rtc_aux.hour && rtcdescarga[estadomodif].min <= rtc_aux.min)
+				if (rtcdescarga[estadomodif].hour <= rtc_aux.hour
+						&& rtcdescarga[estadomodif].min <= rtc_aux.min)
 					atendida[estadomodif] = 1;
 				else
 					atendida[estadomodif] = 0;
