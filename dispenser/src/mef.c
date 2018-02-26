@@ -25,6 +25,9 @@ unsigned char activada[4] = { 0 }; // alarmas activadas 1= activada, 2= desactiv
 unsigned char atendida[4] = { 0 }; // alarmas activadas 1= activada, 2= desactivada
 unsigned char auxactivada = 0;
 unsigned char alarmamodif[16]; // vector para mostrar la alarma a modificar
+uint8_t sec_inicio = 0;
+uint8_t min_inicio = 0;
+
 
 unsigned char modoestado = 0;
 unsigned char estadomodif = 0;
@@ -51,7 +54,7 @@ void MEF_avanzarESTADO(uint8_t t) {
 			gpioWrite(LED1, ON);
 			break;
 		case '2':
-
+			gpioWrite(LED2, ON);
 			break;
 		case '3':
 			gpioWrite(LED3, ON);
@@ -66,6 +69,15 @@ void MEF_avanzarESTADO(uint8_t t) {
 			gpioWrite(LED3, OFF);
 			break;
 		case '7':
+			gpioWrite(LED2, ON);
+			val = rtcRead(&rtc_aux);
+			sec_inicio = rtc_aux.sec;
+			min_inicio = rtc_aux.min;
+			if (min_inicio == 59){
+				min_inicio = 0;
+			}else{
+				min_inicio++;
+			}
 			LCD_pos_xy(0, 0);
 			LCD_write_string("   Sirviendo    ");
 			int muestra = adcRead(CH3);
@@ -90,10 +102,37 @@ void MEF_avanzarESTADO(uint8_t t) {
 				LCD_write_string("      ");
 				LCD_write_string(lcdBuffer);
 				LCD_write_string("      ");
+				val = rtcRead(&rtc_aux);
+				if ((rtc_aux.min == min_inicio && rtc_aux.sec >= sec_inicio) || (rtc_aux.min > min_inicio))
+					break;
 			}
 			LCD_pos_xy(0, 0);
-			LCD_write_string("    Servido     ");
-			delay(1500);
+			gpioWrite(LED2, OFF);
+			if ((rtc_aux.min == min_inicio && rtc_aux.sec >= sec_inicio) || (rtc_aux.min > min_inicio)) {
+				LCD_write_string("Error al servir!");
+				gpioWrite(LED2, ON);
+				delay(500);
+				gpioWrite(LED2, OFF);
+				delay(500);
+				gpioWrite(LED2, ON);
+				delay(500);
+				gpioWrite(LED2, OFF);
+				delay(500);
+				gpioWrite(LED2, ON);
+				delay(500);
+				gpioWrite(LED2, OFF);
+				delay(500);
+				gpioWrite(LED2, ON);
+				delay(500);
+				gpioWrite(LED2, OFF);
+				delay(500);
+			} else {
+				gpioWrite(LED3, ON);
+				LCD_write_string("    Servido     ");
+				delay(1500);
+				gpioWrite(LED3, OFF);
+			}
+
 			break;
 		case '8':
 			gpioWrite(LEDB, OFF);
@@ -242,9 +281,16 @@ void MEF_actualizarINICIAL(void) {
 	int var = 0;
 	for (var = 0; var < 4; ++var) {
 		if (activada[var] == 1 && atendida[var] == 0) {
-
 			if (rtcdescarga[var].hour == rtc_aux.hour
 					&& rtcdescarga[var].min <= rtc_aux.min) {
+				gpioWrite(LED2, ON);
+				sec_inicio = rtc_aux.sec;
+				min_inicio = rtc_aux.min;
+				if (min_inicio == 59){
+					min_inicio = 0;
+				}else{
+					min_inicio++;
+				}
 				LCD_pos_xy(0, 0);
 				LCD_write_string("   Sirviendo    ");
 				int muestra = adcRead(CH3);
@@ -269,11 +315,37 @@ void MEF_actualizarINICIAL(void) {
 					LCD_write_string("      ");
 					LCD_write_string(lcdBuffer);
 					LCD_write_string("      ");
+					val = rtcRead(&rtc_aux);
+					if ((rtc_aux.min == min_inicio && rtc_aux.sec >= sec_inicio) || (rtc_aux.min > min_inicio))
+						break;
 				}
 				LCD_pos_xy(0, 0);
-				LCD_write_string("    Servido     ");
+				gpioWrite(LED2, OFF);
+				if ((rtc_aux.min == min_inicio && rtc_aux.sec >= sec_inicio) || (rtc_aux.min > min_inicio)) {
+					LCD_write_string("Error al servir!");
+					gpioWrite(LED2, ON);
+					delay(500);
+					gpioWrite(LED2, OFF);
+					delay(500);
+					gpioWrite(LED2, ON);
+					delay(500);
+					gpioWrite(LED2, OFF);
+					delay(500);
+					gpioWrite(LED2, ON);
+					delay(500);
+					gpioWrite(LED2, OFF);
+					delay(500);
+					gpioWrite(LED2, ON);
+					delay(500);
+					gpioWrite(LED2, OFF);
+					delay(500);
+				} else {
+					gpioWrite(LED3, ON);
+					LCD_write_string("    Servido     ");
+					delay(1500);
+					gpioWrite(LED3, OFF);
+				}
 				atendida[var] = 1;
-				delay(1500);
 			}
 		}
 	}

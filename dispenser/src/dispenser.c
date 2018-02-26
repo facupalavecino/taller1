@@ -66,7 +66,7 @@ keypad_t keypad;
 int main(void) {
 
 	//Inicializar placa
-	boardConfig();
+  	boardConfig();
 	//Inicializar LCD
 	LCD_init(_2_LINES | DISPLAY_8X5, CURSOR_OFF | DISPLAY_ON);
 	//Inicializar cfg del teclado
@@ -125,6 +125,7 @@ int main(void) {
 	MEF_init();
 	//Inicializar ADC
 	adcConfig(ADC_ENABLE);
+	gpioWrite(LED1, ON);
 
 	LCD_pos_xy(0, 0);
 	LCD_write_string("  Iniciando...  ");
